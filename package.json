@@ -1,0 +1,16 @@
+{
+  "name": "partyboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Yasper De Jong",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "paper": "^0.12.16",
+    "socket.io": "^4.5.3"
+  }
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Party Board</title>
+  <style media="screen">
+    canvas {
+	width: 100%;
+	height: 100%;
+    }
+    html, body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	height: 100%;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.16/paper-full.min.js" integrity="sha512-Xbcp+V0tprywJs9OusYXHzj7oXCrQ548hNlsaBFGm1C/jCDWz+qLd+Jv8QP1GRi0Ywn7HicmSJNMDQEW54CBwA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.3/socket.io.js" integrity="sha512-iWPnCISAd/J+ZacwV2mbNLCaPGRrRo5OS81lKTVPtRg1wGTC20Cfmp5Us5RcbLv42QLdbAWl0MI57yox5VecQg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="text/javascript">
+    const socket = io();
+    const urlParams = new URLSearchParams(window.location.search);
+
+    socket.on("connect", () => {
+	let size = {
+	    width: paper.project.view.size.width,
+	    height: paper.project.view.size.height
+	};
+	socket.emit("joinLobby", {
+	    lobbyid: urlParams.get("lobbyid"),
+	    size: size
+	});
+    });
+
+    var sendPath = function(segments) {
+	socket.emit("sendPath", {
+	    segments: segments,
+	    lobbyid: urlParams.get("lobbyid")
+	});
+    };
+
+    window.onload = function() {
+	paper.setup(document.getElementById("canvas"));
+    };
+    var tool = new paper.Tool();
+    var path;
+    tool.onMouseDown = function(event) {
+	path = new paper.Path({
+	    segments: [event.point],
+	    strokeColor: 'black',
+	    strokeWidth: 20,
+	    strokeCap: 'round'
+	});
+    };
+
+    tool.onMouseDrag = function(event) {
+	path.add(event.point);
+    };
+
+    tool.onMouseUp = function(event) {
+	path.simplify(10);
+	sendPath(path.segments);
+    };
+  </script>
+</head>
+<body>
+  <canvas id="canvas" hidpi="off" resize>Loading canvas...</canvas>
+</body>

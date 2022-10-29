@@ -1,0 +1,29 @@
+
+* Basic Description
+One client will be created as the "white board" that anyone can draw on (generates QR code for others to connect to)
+Other clients can sign on, and when they do, they will be assigned a random color and rectangular section of the whiteboard
+They can draw on their phone/computer and anything they draw will be shown live on the whtie board
+
+
+* Features
+Basic functionality:
+Create public canvas
+Create ability to connect to canvas
+Send signals from client to whiteboard
+
+Client canvas can overlap causing them to interact with each other
+Client can choose to reroll their section of the canvas (in case they don't want to draw over someone else's)
+Clients are all assigned a different color at the same time that they are assigned their section of white board
+
+Others:
+Save the canvas (screenshot)
+Erase?
+Set stroke thickness
+Choose a background color at the start
+Transparent background
+Choose a color pallete
+
+* Possible Caveats
+Live update or trasmit after every line?
+Have to grab the viewport width/height from the phone, and use that size for the personal canvas
+
